@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serverConfig>
+	
+	<!-- JMX settings -->
+	<synapseJmxService name="server" service="jmx:rmi:///jndi/rmi" host="localhost" port="9999"/>
+	
+	<!-- Data base settings -->
+	<synapseDBConfig name="DbTeleadreson">
+		<jdbcDriverSubname>sqlserver</jdbcDriverSubname>
+		<jdbcDriverSubprotocol>jtds</jdbcDriverSubprotocol>
+		<jdbcDriverPackage>net.sourceforge.jtds.jdbc.Driver</jdbcDriverPackage>
+		<dbConnectionAddress>83.169.14.124</dbConnectionAddress>
+		<dbConnectionPort>1956</dbConnectionPort>
+		<dbLoginUser>tele</dbLoginUser>
+		<dbLoginPassword>adreson123!</dbLoginPassword>
+	</synapseDBConfig>
+	
+	<!-- Protocol settings -->
+	<synapseProtocolProxy name="demoProxy" packageName="com.synapse.scada.proxy.dummy.DummyProxy" />
+	<!-- synapseProtocolProxy name="modbus" packageName="com.ees.synapse.server.modbus.Proxy"/ -->
+	<!-- synapseProtocolProxy name="rs232" packageName="com.name.serial.package.Proxy"/ -->
+	
+</serverConfig>

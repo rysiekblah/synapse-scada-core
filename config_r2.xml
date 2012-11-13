@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<systemConfig>
+	<area id="1" name="Home">
+		<subArea id="1" name="HeatingArea" protocol="demoProxy">
+			<unit id="1" name="PompSwitch" type="boolean" state="0" access="RW"/>
+			<unit id="2" name="FanSwitch" type="boolean" state="0" access="RW"/>
+			<unit id="3" name="CarbonSensor" type="boolean" state="0" access="R"/>
+    	</subArea>
+    	<subArea id="2" name="LightingArea" protocol="demoProxy">
+			<unit id="1" name="MainSwitch" type="boolean" state="0" access="RW"/>
+			<unit id="2" name="BellSwitch" type="boolean" state="0" access="RW"/>
+			<unit id="3" name="LightSensor" type="boolean" state="0" access="R"/>
+    	</subArea>
+    </area>
+    <area id="2" name="Garden">
+		<subArea id="1" name="RelaxArea" protocol="demoProxy">
+			<unit id="1" name="WatherPoolSensor" type="boolean" state="0" access="R"/>
+			<unit id="3" name="Music" type="boolean" state="0" access="RW"/>
+    	</subArea>
+    </area>
+    
+</systemConfig>
+
+
+<!--
+    	<subArea id ="1" name="AgdDevices" protocol="modbus" host="192.168.100.100" port="9900">
+    		<unit id="1" name="Fridge" type="boolean" state="0" access="R"/>
+    		<unit id="2" name="Fan" type="percents" state="25" access="RW" maxVal="24"/>
+    		<unit id="3" name="Owen Temperature" type="value" state="21" access="R"/>
+    		<unit id="4" name="Owen" type="boolean" state="0" access="RW"/>
+    	</subArea> 
+    	<subArea id="2" name="Lamps" protocol="modbus" host="192.168.100.100" port="2222">
+    		<unit id="1" name="Main Lamp" type="boolean" state="0" access="RW"/>
+    		<unit id="2" name="Left Lamp" type="boolean" state="0" access="RW"/>
+    		<unit id="3" name="Righ tLamp" type="boolean" state="0" access="RW"/>
+    	</subArea>
+  	</area>
+-->
+<!-- 
+	<area id="2" name="Center Point">
+		<subArea id="1" name="WatherTemperature" protocol="rs232">
+			<unit id="1" name="Boiler Temperature" type="value" state="0" access="R"/>
+    	</subArea>
+    	<subArea id="2" name="HeatingSystem" protocol="modbus" host="192.168.100.3" port="2222">
+    		<unit id="1" name="Fan" type="percents" state="25" access="RW" maxVal="230"/>
+    		<unit id="2" name="Main Pomp" type="boolean" state="1" access="RW"/>
+    		<unit id="3" name="Smoke sensor" type="boolean" state="0" access="R"/>
+    	</subArea>
+	</area> -->
