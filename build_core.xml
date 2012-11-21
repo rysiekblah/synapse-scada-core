@@ -9,8 +9,8 @@
 	<property name="distdir" value="${basedir}/dist" />
 	<property name="commonLibDir" value="../lib" />
 
-	<property name="systemCfgFile" value="config_r2.xml" />
-	<property name="serverCfgFile" value="synapse_server_cfg.xml" />
+	<property name="systemCfgFile" value="config.xml" />
+	<property name="serverCfgFile" value="server_config.xml" />
 
 	<path id="libraries">
 		<fileset dir="${compileLibDir}">
