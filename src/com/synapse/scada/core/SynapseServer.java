@@ -52,10 +52,10 @@ public class SynapseServer extends Server {
 	private static final String domainName = "EssProject";
 
 	/** The cfg file name. */
-	private static final String systemCfgFileName = "config_r2.xml";
+	private static final String systemCfgFileName = "config.xml";
 
 	/** The server cfg file name. */
-	private static final String serverCfgFileName = "synapse_server_cfg.xml";
+	private static final String serverCfgFileName = "server_config.xml";
 
 	/** The timer. */
 	private Timer requestTriggerTimer;

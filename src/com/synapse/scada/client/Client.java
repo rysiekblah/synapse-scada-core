@@ -78,7 +78,7 @@ public class Client implements Serializable {
 
 	public void init(ServletContext context) throws SynapseClientException {
 		JMXSettingsReader reader = new JMXSettingsReader();
-		reader.parse(context.getResourceAsStream("/synapse_server_cfg.xml"));
+		reader.parse(context.getResourceAsStream("/server_config.xml"));
 		connString = "service:" + reader.getService() + "://"
 				+ reader.getHost() + ":" + reader.getPort() + "/"
 				+ reader.getName();

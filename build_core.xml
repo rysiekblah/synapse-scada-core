@@ -8,7 +8,9 @@
 	<property name="compileLibDir" value="${basedir}/lib" />
 	<property name="distdir" value="${basedir}/dist" />
 	<property name="commonLibDir" value="../lib" />
-
+	<property name="jar.name" value="synapse_core" />
+	<property name="war.name" value="client" />
+	<property name="version.num" value="1.00" />
 	<property name="systemCfgFile" value="config.xml" />
 	<property name="serverCfgFile" value="server_config.xml" />
 
@@ -24,8 +26,8 @@
 
 	<target name="clean">
 		<delete dir="${builddir}" />
-		<delete file="sympa.war" />
-		<delete file="core.jar" />
+		<delete file="${war.name}-${version.num}.war" />
+		<delete file="${jar.name}-${version.num}.jar" />
 		<delete file="build.log" />
 		<delete file="MANIFEST.MF" />
 		<delete dir="${distdir}" />
@@ -39,9 +41,9 @@
 
 	<target name="war" depends="compileClient">
 		<mkdir dir="${distdir}" />
-		<war destfile="${distdir}/client.war" webxml="./etc/web.xml">
+		<war destfile="${distdir}/${war.name}-${version.num}.war" webxml="./etc/web.xml">
 			<fileset dir="./web" />
-			<fileset file="./synapse_server_cfg.xml"/>
+			<fileset file="./${serverCfgFile}" />
 			<classes dir="${builddir}" />
 			<lib dir="lib" />
 			<zipfileset dir="img" prefix="img" />
@@ -55,9 +57,7 @@
 		<javac srcdir="${sourcedir}" excludes="com/synapse/scada/client/**" destdir="${builddir}" classpathref="libraries" debug="true" />
 	</target>
 
-	<target name="jar" depends="compileServer" >
-		<property name="jar.name" value="synapse_core-" />
-		<property name="version.num" value="1.00" />
+	<target name="jar" depends="compileServer">
 		<buildnumber file="build.num" />
 
 		<tstamp>
@@ -73,7 +73,7 @@
 			<attribute name="Built-Date" value="${TODAY}" />
 		</manifest>
 
-		<jar jarfile="${distdir}/${jar.name}${version.num}.jar" basedir="${builddir}" manifest="MANIFEST.MF" />
+		<jar jarfile="${distdir}/${jar.name}-${version.num}.jar" basedir="${builddir}" manifest="MANIFEST.MF" />
 	</target>
 
 
