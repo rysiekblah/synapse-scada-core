@@ -10,6 +10,8 @@ import javax.jws.WebService;
 
 /**
  * Created by tomek on 5/29/14.
+ *
+ * Service Endpoint Interface (SEI) for Scada system.
  */
 @WebService
 public interface SynapseWS {
