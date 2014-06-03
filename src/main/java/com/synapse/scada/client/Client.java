@@ -17,8 +17,8 @@
  *******************************************************************************/
 package com.synapse.scada.client;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
+import java.util.jar.JarEntry;
 
 import javax.management.Attribute;
 import javax.management.JMX;
@@ -63,6 +63,8 @@ public class Client implements Serializable {
 	/** The config. */
 	private ConfigurationMBean config;
 
+    private static Client instance;
+
 	/**
 	 * Instantiates a new client.
 	 * 
@@ -73,8 +75,33 @@ public class Client implements Serializable {
 	 * @throws SynapseClientException
 	 *             the synapse client exception
 	 */
-	public Client() throws SynapseClientException {
-	}
+	public Client() {
+        JMXSettingsReader reader = new JMXSettingsReader();
+        try (InputStream in = new FileInputStream("/home/tomek/IdeaProjects/synapse-scada-core/server_config.xml");) {
+
+            reader.parse(in);
+            connString = "service:" + reader.getService() + "://"
+                    + reader.getHost() + ":" + reader.getPort() + "/"
+                    + reader.getName();
+            System.out.println("conn: " + connString);
+            connect();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SynapseClientException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public static Client getInstance() {
+        if (instance == null) {
+            instance = new Client();
+        }
+        return instance;
+    }
 
 	public void init(ServletContext context) throws SynapseClientException {
 		JMXSettingsReader reader = new JMXSettingsReader();
@@ -83,6 +110,8 @@ public class Client implements Serializable {
 				+ reader.getHost() + ":" + reader.getPort() + "/"
 				+ reader.getName();
 	}
+
+
 
 	/**
 	 * Gets the conn id.

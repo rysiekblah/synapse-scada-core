@@ -1,5 +1,6 @@
 package com.synapse.scada.ws;
 
+import com.synapse.scada.client.Client;
 import com.synapse.scada.config.Area;
 import com.synapse.scada.config.SubArea;
 import com.synapse.scada.config.SystemConfig;
@@ -23,7 +24,9 @@ public class SynapseWSImpl implements SynapseWS {
 
     @Override
     public SystemConfig getSystem() {
-        return null;
+        SystemConfig config = Client.getInstance().getConfig();
+        System.out.println("Config: " + config);
+        return config;
     }
 
     @Override
