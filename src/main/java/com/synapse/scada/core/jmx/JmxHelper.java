@@ -186,9 +186,7 @@ public class JmxHelper {
 
 		try {
 
-			mbs.setAttribute(
-					ObjectName.getInstance(mbs.getDefaultDomain(), key, value),
-					attribute);
+			mbs.setAttribute(ObjectName.getInstance(mbs.getDefaultDomain(), key, value), attribute);
 
 		} catch (JMException e) {
 			LOG.error("Setting attribute(" + attribute.getName()
@@ -218,9 +216,7 @@ public class JmxHelper {
 		Object object = null;
 
 		try {
-			object = mbs.getAttribute(
-					ObjectName.getInstance(mbs.getDefaultDomain(), key, value),
-					attribute);
+			object = mbs.getAttribute(ObjectName.getInstance(mbs.getDefaultDomain(), key, value), attribute);
 		} catch (JMException e) {
 			LOG.error("Get attribute(" + attribute + ") of ObjectName key("
 					+ key + ")" + ", value(" + value + ") FAILED");

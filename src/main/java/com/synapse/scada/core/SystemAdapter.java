@@ -3,6 +3,10 @@ package com.synapse.scada.core;
 import com.synapse.scada.client.JMXSettingsReader;
 import com.synapse.scada.client.SynapseClientException;
 import com.synapse.scada.config.SystemConfig;
+import com.synapse.scada.config.Unit;
+import com.synapse.scada.core.element.ElementMBean;
+import com.synapse.scada.core.jmx.JmxHelper;
+import com.synapse.scada.core.jmx.SynapseJMXException;
 
 import javax.management.JMX;
 import javax.management.MBeanServerConnection;
@@ -109,4 +113,18 @@ public class SystemAdapter {
         return syscfg;
     }
 
+    public String getUnitState(String elementName, String id) {
+
+        try {
+            ObjectName name = JmxHelper.Instance().createObjectName("Element", elementName);
+            System.out.println("Name: " + name);
+            Integer state = JMX.newMBeanProxy(JmxHelper.Instance().getMBServer(), name, ElementMBean.class).getUnitState(Integer.parseInt(id));
+            System.out.println("State: " + state);
+            return state.toString();
+        } catch (SynapseJMXException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

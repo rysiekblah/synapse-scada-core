@@ -46,6 +46,14 @@ public class SynapseWSImpl implements SynapseWS {
     }
 
     @Override
+    public String getUnitState(String elementName, String id) {
+
+        String state = SystemAdapter.getInstance().getUnitState(elementName, id);
+
+        return state;
+    }
+
+    @Override
     public String getVersion() {
         if (wsContext == null) {
             throw new RuntimeException("WS context null");

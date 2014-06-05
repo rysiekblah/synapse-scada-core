@@ -29,6 +29,9 @@ public interface SynapseWS {
     Unit getUnit(int unitId);
 
     @WebMethod
+    String getUnitState(String elementName, String id);
+
+    @WebMethod
     String getVersion();
 
 }
