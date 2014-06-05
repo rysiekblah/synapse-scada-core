@@ -68,13 +68,11 @@ public class ElementCreate implements Command {
 	 *            the proxys
 	 */
 	public void createProxyMap(List<SynapseProtocolProxy> proxys) {
-		for (Iterator<SynapseProtocolProxy> it = proxys.iterator(); it
-				.hasNext();) {
-			SynapseProtocolProxy p = it.next();
-			proxyMap.put(p.getName(), p.getPackageName());
-			LOG.debug("Protocol[" + p.getName() + "], Proxy["
-					+ p.getPackageName() + "]");
-		}
+
+        for (SynapseProtocolProxy proxy : proxys) {
+            proxyMap.put(proxy.getName(), proxy.getPackageName());
+            LOG.debug("Protocol[" + proxy.getName() + "], Proxy[" + proxy.getPackageName() + "]");
+        }
 	}
 
 	/*
@@ -96,11 +94,9 @@ public class ElementCreate implements Command {
 		// Config the listener
 		try {
 
-			unitsMgr.setElementObjName(JmxHelper.Instance().createObjectName(
-					"Element", name));
+			unitsMgr.setElementObjName(JmxHelper.Instance().createObjectName("Element", name));
 
-			JmxHelper.Instance().addNotificationListener("Services:type=Timer",
-					unitsMgr);
+			JmxHelper.Instance().addNotificationListener("Services:type=Timer",	unitsMgr);
 
 			LOG.info("SubArea name: " + name + ", create MBean for it");
 			JmxHelper.Instance().createMBean(elementClass, name);
@@ -111,16 +107,14 @@ public class ElementCreate implements Command {
 
 			// Set sub area
 			Attribute subAreaAttr = new Attribute("SubArea", subArea);
-			JmxHelper.Instance()
-					.setMBeanAttribute("Element", name, subAreaAttr);
+			JmxHelper.Instance().setMBeanAttribute("Element", name, subAreaAttr);
 
 			// Set proxy
 			String proxyName = proxyMap.get(subArea.getProtocol());
 			LOG.debug("Register proxy: " + proxyName);
 
 			Attribute proxyAttr;
-			proxyAttr = new Attribute("Proxy", ProtocolProxyFactory
-					.getInstance().createProxy(proxyName));
+			proxyAttr = new Attribute("Proxy", ProtocolProxyFactory.getInstance().createProxy(proxyName));
 			JmxHelper.Instance().setMBeanAttribute("Element", name, proxyAttr);
 			JmxHelper.Instance().printMBeans();
 

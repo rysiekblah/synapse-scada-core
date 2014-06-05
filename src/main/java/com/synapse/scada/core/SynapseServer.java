@@ -82,12 +82,10 @@ public class SynapseServer extends Server {
 		LOG.debug("Start configuration of the Synapse server");
 
 		// Read system configuration
-		SystemConfig systemCfg = (SystemConfig) configure(SystemConfig.class,
-				systemCfgFileName);
+		SystemConfig systemCfg = (SystemConfig) configure(SystemConfig.class, systemCfgFileName);
 		
 		// Read server configuration
-		ServerConfig serverCfg = (ServerConfig) configure(ServerConfig.class,
-				serverCfgFileName);
+		ServerConfig serverCfg = (ServerConfig) configure(ServerConfig.class, serverCfgFileName);
 
 		jmxSettings = serverCfg.getSynapseJmxService();
 
@@ -157,19 +155,15 @@ public class SynapseServer extends Server {
 			throws SynapseException {
 
 		try {
-
 			LOG.debug("Create Configuration MBean and register to MBeanServer");
 			JmxHelper.Instance().createMBean(Configuration.class, "1");
 
 			// Set config attribute to Configuration mbean
 			Attribute cfgAttr = new Attribute("Config", config);
-			JmxHelper.Instance().setMBeanAttribute("Configuration", "1",
-					cfgAttr);
+			JmxHelper.Instance().setMBeanAttribute("Configuration", "1", cfgAttr);
 
 			LOG.debug("Register Timer to MBean server");
-			JmxHelper.Instance().registerMBean(requestTriggerTimer,
-					"Services:type=Timer");
-
+			JmxHelper.Instance().registerMBean(requestTriggerTimer,	"Services:type=Timer");
 			executeCommand(createCmd);
 
 		} catch (SynapseJMXException e) {
@@ -188,15 +182,11 @@ public class SynapseServer extends Server {
 	private void establishRemoteConnection() throws SynapseException {
 		try {
 			if (jmxSettings != null) {
-				String connString = "service:" + jmxSettings.getService()
-						+ "://" + jmxSettings.getHost() + ":"
-						+ jmxSettings.getPort() + "/" + jmxSettings.getName();
-				LOG.debug("Connection string: " + connString);
-				JmxHelper.Instance().attachJmxConnector(connString);
-				LOG.debug("Remote connection established succesfully");
-			} else {
-				LOG.debug("Server not connected to JmxConnector, synapseJmxService("
-						+ jmxSettings + ")");
+                String connString = createJmxConnectionString(jmxSettings);
+                JmxHelper.Instance().attachJmxConnector(connString);
+                LOG.debug("Remote connection established succesfully");
+            } else {
+				LOG.debug("Server not connected to JmxConnector, synapseJmxService(" + jmxSettings + ")");
 			}
 
 		} catch (SynapseJMXException e) {
@@ -208,6 +198,15 @@ public class SynapseServer extends Server {
 			throw new SynapseException(e.getMessage());
 		}
 	}
+
+    private String createJmxConnectionString(SynapseJmxService jmxSettings) {
+
+        String connString = "service:" + jmxSettings.getService()
+                + "://" + jmxSettings.getHost() + ":"
+                + jmxSettings.getPort() + "/" + jmxSettings.getName();
+        LOG.debug("Connection string: " + connString);
+        return connString;
+    }
 
 	/**
 	 * Close remote connection.
@@ -262,20 +261,27 @@ public class SynapseServer extends Server {
 
 		try {
 
-			SystemConfig sysCfg = (SystemConfig) JmxHelper.Instance()
-					.getMBeanAttribute("Configuration", "1", "Config");
+			SystemConfig sysCfg = (SystemConfig) JmxHelper.Instance().getMBeanAttribute("Configuration", "1", "Config");
 
-			List<Area> areaList = sysCfg.getArea();
-			for (Iterator<Area> ita = areaList.iterator(); ita.hasNext();) {
-				Area area = ita.next();
-				List<SubArea> subAreaList = area.getSubArea();
-				for (Iterator<SubArea> itsa = subAreaList.iterator(); itsa
-						.hasNext();) {
-					SubArea subArea = itsa.next();
-					command.execute(subArea);
-				}
+            for (Area area : sysCfg.getArea()) {
+                for (SubArea subArea : area.getSubArea()) {
+                    command.execute(subArea);
+                }
 
-			}
+            }
+
+
+//            List<Area> areaList = sysCfg.getArea();
+//			for (Iterator<Area> ita = areaList.iterator(); ita.hasNext();) {
+//				Area area = ita.next();
+//				List<SubArea> subAreaList = area.getSubArea();
+//				for (Iterator<SubArea> itsa = subAreaList.iterator(); itsa
+//						.hasNext();) {
+//					SubArea subArea = itsa.next();
+//					command.execute(subArea);
+//				}
+//
+//			}
 
 		} catch (SynapseJMXException e) {
 			LOG.error("Execute command(" + command.getClass() + ") FALED");

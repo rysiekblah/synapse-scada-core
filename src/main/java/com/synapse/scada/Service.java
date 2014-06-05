@@ -14,25 +14,6 @@ import java.rmi.ServerException;
 /**
  * Created by tomek on 5/29/14.
  */
-//public class Service {
-//
-//    public static void main(String args[]) {
-//        final String url = "http://localhost:8888/synapse";
-//        System.out.println("Publishing SynapseWS at endpoint " + url);
-//        Endpoint.publish(url, new SynapseWSImpl());
-//
-//        SynapseServer server = new SynapseServer();
-//        try {
-//            server.create();
-//            server.start();
-//        } catch (SynapseException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//}
-
 public class Service extends Thread {
 
     /** The LOG. */

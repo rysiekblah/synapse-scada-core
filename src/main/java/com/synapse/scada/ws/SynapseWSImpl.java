@@ -5,6 +5,7 @@ import com.synapse.scada.config.Area;
 import com.synapse.scada.config.SubArea;
 import com.synapse.scada.config.SystemConfig;
 import com.synapse.scada.config.Unit;
+import com.synapse.scada.core.SystemAdapter;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
@@ -24,7 +25,7 @@ public class SynapseWSImpl implements SynapseWS {
 
     @Override
     public SystemConfig getSystem() {
-        SystemConfig config = Client.getInstance().getConfig();
+        SystemConfig config = SystemAdapter.getInstance().getConfig();
         System.out.println("Config: " + config);
         return config;
     }

@@ -272,10 +272,7 @@ public class JmxHelper {
 					+ "), key(" + clazz.getSimpleName() + "), value(" + value
 					+ ")");
 			// Create mbean
-			mbs.createMBean(
-					clazz.getName(),
-					ObjectName.getInstance(mbs.getDefaultDomain(),
-							clazz.getSimpleName(), value));
+			mbs.createMBean(clazz.getName(), ObjectName.getInstance(mbs.getDefaultDomain(),	clazz.getSimpleName(), value));
 
 		} catch (JMException e) {
 			LOG.error("MBean creation FAILED");
@@ -347,17 +344,12 @@ public class JmxHelper {
 	 * @throws SynapseJMXException
 	 *             the synapse jmx exception
 	 */
-	public void addNotificationListener(String name,
-			NotificationListener listener) throws SynapseJMXException {
+	public void addNotificationListener(String name, NotificationListener listener) throws SynapseJMXException {
 
-		LOG.debug("Add notification listener(" + listener.getClass()
-				+ "), to object(" + name + ")");
+		LOG.debug("Add notification listener(" + listener.getClass() + "), to object(" + name + ")");
 
 		try {
-
-			mbs.addNotificationListener(new ObjectName(name), listener, null,
-					null);
-
+			mbs.addNotificationListener(new ObjectName(name), listener, null, null);
 		} catch (JMException e) {
 			LOG.error("Notification listener adding FAILED");
 			throw new SynapseJMXException(e.getMessage());
@@ -379,8 +371,7 @@ public class JmxHelper {
 		JMXServiceURL url;
 		try {
 			url = new JMXServiceURL(serviceUrl);
-			cs = JMXConnectorServerFactory
-					.newJMXConnectorServer(url, null, mbs);
+			cs = JMXConnectorServerFactory.newJMXConnectorServer(url, null, mbs);
 			cs.start();
 		} catch (MalformedURLException e) {
 			LOG.error("JMX connection FAILED: URL ERROR");
@@ -475,13 +466,9 @@ public class JmxHelper {
 	 *             the synapse jmx exception
 	 */
 	public static void detatchJmxConnector() throws SynapseJMXException {
-
 		LOG.debug("Detache JMX connector: " + cs.toString());
-
 		try {
-
 			cs.stop();
-
 		} catch (IOException e) {
 			LOG.error("JMX connector detatching FAILED");
 			throw new SynapseJMXException(e.getMessage());
