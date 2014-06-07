@@ -4,6 +4,7 @@ import com.synapse.scada.config.Area;
 import com.synapse.scada.config.SubArea;
 import com.synapse.scada.config.SystemConfig;
 import com.synapse.scada.config.Unit;
+import com.synapse.scada.core.UnitState;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -30,6 +31,9 @@ public interface SynapseWS {
 
     @WebMethod
     String getUnitState(String elementName, String id);
+
+    @WebMethod
+    void setUnitState(String elementName, String id, UnitState state);
 
     @WebMethod
     String getVersion();

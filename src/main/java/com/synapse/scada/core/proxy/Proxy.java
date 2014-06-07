@@ -117,4 +117,5 @@ public interface Proxy {
 	 */
 	int getValue(int id) throws SynapseException;
 
+    void addUnit(Integer id, int i);
 }

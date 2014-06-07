@@ -4,6 +4,7 @@ import com.synapse.scada.client.JMXSettingsReader;
 import com.synapse.scada.client.SynapseClientException;
 import com.synapse.scada.config.SystemConfig;
 import com.synapse.scada.config.Unit;
+import com.synapse.scada.core.element.Element;
 import com.synapse.scada.core.element.ElementMBean;
 import com.synapse.scada.core.jmx.JmxHelper;
 import com.synapse.scada.core.jmx.SynapseJMXException;
@@ -15,6 +16,7 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import javax.servlet.ServletContext;
+import javax.swing.text.DefaultStyledDocument;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -116,7 +118,7 @@ public class SystemAdapter {
     public String getUnitState(String elementName, String id) {
 
         try {
-            ObjectName name = JmxHelper.Instance().createObjectName("Element", elementName);
+            ObjectName name = createName(elementName);
             System.out.println("Name: " + name);
             Integer state = JMX.newMBeanProxy(JmxHelper.Instance().getMBServer(), name, ElementMBean.class).getUnitState(Integer.parseInt(id));
             System.out.println("State: " + state);
@@ -126,5 +128,23 @@ public class SystemAdapter {
         }
 
         return null;
+    }
+
+    public void turnOnUnit(String elementName, String id, UnitState state) throws SynapseJMXException {
+        ElementMBean element = getElement(elementName);
+        element.setState(Integer.parseInt(id), state.getValue());
+    }
+
+    private ObjectName createName(String elementName) throws SynapseJMXException {
+        return JmxHelper.Instance().createObjectName("Element", elementName);
+    }
+
+    private ElementMBean getElement(String name) throws SynapseJMXException {
+        return JMX.newMBeanProxy(JmxHelper.Instance().getMBServer(), createName(name), ElementMBean.class);
+    }
+
+    public void turnOffUnit(String elementName, String id, UnitState state) throws SynapseJMXException {
+        ElementMBean element = getElement(elementName);
+        element.setState(Integer.parseInt(id), state.getValue());
     }
 }

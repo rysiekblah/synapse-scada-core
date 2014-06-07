@@ -105,17 +105,18 @@ public class ElementCreate implements Command {
 			Attribute nameAttr = new Attribute("Name", name);
 			JmxHelper.Instance().setMBeanAttribute("Element", name, nameAttr);
 
-			// Set sub area
-			Attribute subAreaAttr = new Attribute("SubArea", subArea);
-			JmxHelper.Instance().setMBeanAttribute("Element", name, subAreaAttr);
-
-			// Set proxy
-			String proxyName = proxyMap.get(subArea.getProtocol());
-			LOG.debug("Register proxy: " + proxyName);
+            // Set proxy
+            String proxyName = proxyMap.get(subArea.getProtocol());
+            LOG.debug("Register proxy: " + proxyName);
 
 			Attribute proxyAttr;
 			proxyAttr = new Attribute("Proxy", ProtocolProxyFactory.getInstance().createProxy(proxyName));
 			JmxHelper.Instance().setMBeanAttribute("Element", name, proxyAttr);
+
+            // Set sub area
+            Attribute subAreaAttr = new Attribute("SubArea", subArea);
+            JmxHelper.Instance().setMBeanAttribute("Element", name, subAreaAttr);
+
 			JmxHelper.Instance().printMBeans();
 
 		} catch (SynapseJMXException e) {

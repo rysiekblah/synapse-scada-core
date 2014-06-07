@@ -6,6 +6,8 @@ import com.synapse.scada.config.SubArea;
 import com.synapse.scada.config.SystemConfig;
 import com.synapse.scada.config.Unit;
 import com.synapse.scada.core.SystemAdapter;
+import com.synapse.scada.core.UnitState;
+import com.synapse.scada.core.jmx.SynapseJMXException;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
@@ -54,11 +56,30 @@ public class SynapseWSImpl implements SynapseWS {
     }
 
     @Override
+    public void setUnitState(String elementName, String id, UnitState state) {
+        if (state == null) {
+            throw new RuntimeException("unit state is null");
+        }
+
+        // TODO: do this case much more geeky
+        try{
+            if (state.equals(UnitState.ON)) {
+                SystemAdapter.getInstance().turnOnUnit(elementName, id, state);
+            } else if (state.equals(UnitState.OFF)) {
+                SystemAdapter.getInstance().turnOffUnit(elementName, id, state);
+            }
+        } catch (SynapseJMXException e) {
+        e.printStackTrace();
+        }
+
+    }
+
+    @Override
     public String getVersion() {
         if (wsContext == null) {
             throw new RuntimeException("WS context null");
         }
-        System.out.println("ContextMsg: " + wsContext.getMessageContext().toString());
+        System.out.println(" ##### " + hashCode() + " -- ContextMsg: " + wsContext.getMessageContext().toString());
         return "1.0.0";
     }
 }

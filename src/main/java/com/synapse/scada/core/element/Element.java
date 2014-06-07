@@ -107,13 +107,12 @@ public class Element implements ElementMBean {
 	 * Create map of units associated with this sub-area.
 	 */
 	private void createMapOfUnits() {
-		StringBuffer sbuf = new StringBuffer(
-				"Mapping all Units associated with element(" + name + ") :\n");
+		StringBuffer sbuf = new StringBuffer("Mapping all Units associated with element(" + name + ") :\n");
 		for (Unit unit : subArea.getUnit()) {
 			units.put(unit.getId(), unit);
-			sbuf.append("id:" + unit.getId() + ", name:" + unit.getName()
-					+ "\n");
-		}
+			sbuf.append("id:" + unit.getId() + ", name:" + unit.getName() + "\n");
+            proxy.addUnit(unit.getId(), 0);
+        }
 		LOG.debug(sbuf);
 	}
 
@@ -135,6 +134,7 @@ public class Element implements ElementMBean {
 
 		synchronized (units) {
 			try {
+                LOG.info("State has changed: " + id + ", " + state);
 				// Send request to change the unit's state
 				proxy.setState(id, state);
 
@@ -203,7 +203,7 @@ public class Element implements ElementMBean {
 			for (Map.Entry<Integer, Unit> item : units.entrySet()) {
 				try {
 					int id = item.getValue().getId();
-					LOG.debug("Quering stat of unit id: " + id);
+//					LOG.debug("Quering stat of unit id: " + id);
 					int stat = proxy.getState(item.getValue().getId());
 					// update the state
 					item.getValue().setState(stat);

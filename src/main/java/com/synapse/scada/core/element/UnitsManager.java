@@ -74,8 +74,8 @@ public class UnitsManager implements NotificationListener {
 	 */
 	@Override
 	public void handleNotification(Notification notification, Object handback) {
-		LOG.debug("Nofitication received: " + notification.getType() + ",  "
-				+ elementObjName.getCanonicalName());
+	//	LOG.debug("Nofitication received: " + notification.getType() + ",  "
+	///			+ elementObjName.getCanonicalName());
 
 		try {
 			JMX.newMBeanProxy(JmxHelper.Instance().getMBServer(),

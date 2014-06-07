@@ -1,9 +1,12 @@
 package com.synapse.scada.proxy.dummy;
 
+import com.google.common.collect.Maps;
 import com.synapse.scada.core.SynapseException;
 import org.apache.log4j.Logger;
 import com.synapse.scada.config.SubArea;
 import com.synapse.scada.core.proxy.Proxy;
+
+import java.util.Map;
 
 /**
  * The Class DummyProxy.
@@ -13,14 +16,25 @@ import com.synapse.scada.core.proxy.Proxy;
  */
 public class DummyProxy implements Proxy {
 
-    /** The log. */
+    /**
+     * The log.
+     */
     static Logger LOG = Logger.getLogger(DummyProxy.class);
-    /** The demo printout. */
+    /**
+     * The demo printout.
+     */
     private final String DEMO_PRINTOUT = "Proxy DEMO: ";
-    /** The state. */
+    /**
+     * The state.
+     */
     private int state;
-    /** The value. */
+    /**
+     * The value.
+     */
     private int value;
+
+    private Map<Integer, Integer> realUnitsMock;
+
 
     /**
      * Instantiates a new dummy proxy.
@@ -28,6 +42,7 @@ public class DummyProxy implements Proxy {
     public DummyProxy() {
         state = 0;
         value = 1;
+        realUnitsMock = Maps.newHashMap();
     }
 
     /**
@@ -63,9 +78,10 @@ public class DummyProxy implements Proxy {
     @Override
     public int getState(int arg0) throws SynapseException {
 // Dummy work :)
-        state = state == 0 ? 1 : 0;
-        LOG.debug(DEMO_PRINTOUT + " getState : " + state);
-        return state;
+        //state = state == 0 ? 1 : 0;
+        //LOG.debug(DEMO_PRINTOUT + " getState : " + state);
+        //return state;
+        return realUnitsMock.get(arg0);
     }
 
     /**
@@ -84,6 +100,11 @@ public class DummyProxy implements Proxy {
 // Dummy work :)
         LOG.debug(DEMO_PRINTOUT + " getValue : " + value++);
         return 0;
+    }
+
+    @Override
+    public void addUnit(Integer id, int i) {
+        realUnitsMock.put(id, i);
     }
 
     /**
@@ -106,7 +127,7 @@ public class DummyProxy implements Proxy {
      */
     @Override
     public boolean isConnected() {
-        LOG.debug(DEMO_PRINTOUT + " isConnected");
+        //LOG.debug(DEMO_PRINTOUT + " isConnected");
         return true;
     }
 
@@ -114,13 +135,13 @@ public class DummyProxy implements Proxy {
      * This method sends request to managed device to set state with given value
      * of unit with given id.
      *
-     * @param arg0 the arg0
-     * @param arg1 the arg1
+     * @param id the arg0
+     * @param state the arg1
      * @throws SynapseException the synapse exception
      */
     @Override
-    public void setState(int arg0, int arg1) throws SynapseException {
-
+    public void setState(int id, int state) throws SynapseException {
+        realUnitsMock.put(id, state);
     }
 
     /**
