@@ -1,3 +1,8 @@
+Hi all, this framework is under big development, so please don't use it until stable version. If you want to contribute, feel free to join :)
+
+Regards,
+rysiek
+
 synapse-scada-core
 ==================
 
