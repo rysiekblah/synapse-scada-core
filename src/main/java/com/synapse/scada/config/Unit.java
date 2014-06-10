@@ -40,7 +40,7 @@ public class Unit implements Serializable {
 	private String name;
 
 	/** The type. */
-	private String type;
+	private UnitType type;
 
 	/** The state. */
 	private Integer state;
@@ -104,7 +104,7 @@ public class Unit implements Serializable {
 	 * @return the type
 	 */
 	@XmlAttribute
-	public String getType() {
+	public UnitType getType() {
 		return type;
 	}
 
@@ -114,7 +114,7 @@ public class Unit implements Serializable {
 	 * @param type
 	 *            the new type
 	 */
-	public void setType(String type) {
+	public void setType(UnitType type) {
 		this.type = type;
 	}
 

@@ -61,15 +61,10 @@ public class SynapseWSImpl implements SynapseWS {
             throw new RuntimeException("unit state is null");
         }
 
-        // TODO: do this case much more geeky
-        try{
-            if (state.equals(UnitState.ON)) {
-                SystemAdapter.getInstance().turnOnUnit(elementName, id, state);
-            } else if (state.equals(UnitState.OFF)) {
-                SystemAdapter.getInstance().turnOffUnit(elementName, id, state);
-            }
+        try {
+            state.changeState(elementName, id);
         } catch (SynapseJMXException e) {
-        e.printStackTrace();
+            e.printStackTrace();
         }
 
     }

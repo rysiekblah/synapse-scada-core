@@ -17,6 +17,8 @@
  *******************************************************************************/
 package com.synapse.scada.core;
 
+import com.synapse.scada.core.jmx.SynapseJMXException;
+
 /**
  * The Enum UnitState.
  *
@@ -30,6 +32,8 @@ public enum UnitState {
     
     /** The OFF. */
     OFF(0),
+
+    VALUE(3),
     
     /** The UNKNOWN. */
     UNKNOWN(-1);
@@ -55,4 +59,16 @@ public enum UnitState {
         return value;
     }
 
+    public void changeState(String element, String id) throws SynapseJMXException {
+        switch (value) {
+            case 1:
+                SystemAdapter.getInstance().turnOnUnit(element, id, UnitState.ON);
+                break;
+            case 0:
+                SystemAdapter.getInstance().turnOffUnit(element, id, OFF);
+                break;
+            default:
+                break;
+        }
+    }
 }
