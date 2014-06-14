@@ -7,6 +7,8 @@ import com.synapse.scada.core.SynapseServer;
 import com.synapse.scada.ws.SynapseWSImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.xml.ws.Endpoint;
 import java.rmi.ServerException;
@@ -77,16 +79,24 @@ public class Service extends Thread {
      */
     public static void main(String[] args) {
         PropertyConfigurator.configure("log.properties");
-        Server server = new SynapseServer();
-        Service service = new Service(server);
-        try {
-            service.init();
-            Runtime rt = Runtime.getRuntime();
-            rt.addShutdownHook(new ServerShutDown(server));
-            service.start();
-            service.estabWebService();
-        } catch (ServerException e) {
-            LOG.error("Server FAILED", e);
-        }
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+
+        SequenceGenerator generator =
+                (SequenceGenerator) context.getBean("sequenceGenerator");
+        System.out.println(generator.getSequence());
+        System.out.println(generator.getSequence());
+
+
+//        Server server = new SynapseServer();
+//        Service service = new Service(server);
+//        try {
+//            service.init();
+//            Runtime rt = Runtime.getRuntime();
+//            rt.addShutdownHook(new ServerShutDown(server));
+//            service.start();
+//            service.estabWebService();
+//        } catch (ServerException e) {
+//            LOG.error("Server FAILED", e);
+//        }
     }
 }
