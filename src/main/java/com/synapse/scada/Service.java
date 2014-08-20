@@ -12,6 +12,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.xml.ws.Endpoint;
 import java.rmi.ServerException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Created by tomek on 5/29/14.
@@ -85,6 +88,20 @@ public class Service extends Thread {
                 (SequenceGenerator) context.getBean("sequenceGenerator");
         System.out.println(generator.getSequence());
         System.out.println(generator.getSequence());
+
+//        try {
+//            Class.forName("org.hsqldb.jdbc.JDBCDriver" );
+//        } catch (Exception e) {
+//            System.err.println("ERROR: failed to load HSQLDB JDBC driver.");
+//            e.printStackTrace();
+//            return;
+//        }
+//
+//        try {
+//            Connection c = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb", "SA", "");
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
 
 
 //        Server server = new SynapseServer();

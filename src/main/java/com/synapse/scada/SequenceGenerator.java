@@ -9,12 +9,14 @@ public class SequenceGenerator {
     private String suffix;
     private int initial;
     private int counter;
+    private String username;
 
     public SequenceGenerator() {}
-    public SequenceGenerator(String prefix, String suffix, int initial) {
+    public SequenceGenerator(String prefix, String suffix, int initial, String username) {
         this.prefix = prefix;
         this.suffix = suffix;
         this.initial = initial;
+        this.username = username;
     }
     public void setPrefix(String prefix) {
         this.prefix = prefix;
@@ -24,6 +26,10 @@ public class SequenceGenerator {
     }
     public void setInitial(int initial) {
         this.initial = initial;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public synchronized String getSequence() {
